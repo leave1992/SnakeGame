@@ -1,4 +1,4 @@
-﻿{
+{
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
@@ -15,13 +15,27 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Snake.Game": {
+    "IIS Express (Development)": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:60362"
+      "applicationUrl": "http://localhost:60361/"
+    },
+    "IIS Express (Production)": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Production"
+      },
+      "applicationUrl": "http://localhost:60361/"
+    },
+    "IIS Express (Tests)": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Tests"
+      }
     }
   }
 }

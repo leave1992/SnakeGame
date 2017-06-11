@@ -1,18 +1,18 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
+using Snake.DataAccess.Models;
 
 namespace Snake.Game.Models
 {
     public partial class SnakeDBContext : DbContext
     {
         public virtual DbSet<Scores> Scores { get; set; }
-        public virtual DbSet<Users> Users { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<HighScores> HighScores { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public SnakeDBContext(DbContextOptions<SnakeDBContext> options) : base(options)
         {
-            optionsBuilder.UseSqlServer(@"Server=Vitalik;Database=SnakeDB;Trusted_Connection=True;");
         }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -29,7 +29,7 @@ namespace Snake.Game.Models
                     .HasConstraintName("FK__Scores__UserId__36B12243");
             });
 
-            modelBuilder.Entity<Users>(entity =>
+            modelBuilder.Entity<User>(entity =>
             {
                 entity.HasKey(e => e.UserId)
                     .HasName("PK__Users__1788CC4C4D5BFDB2");
@@ -40,6 +40,13 @@ namespace Snake.Game.Models
                     .IsRequired()
                     .HasColumnType("varchar(255)");
             });
+
+            modelBuilder.Entity<HighScores>(entity =>
+            {
+                entity.HasKey(e => e.HighScoreId);
+            });
+
+            modelBuilder.Entity<HighScores>().ToTable("HighScores");
         }
     }
 }
