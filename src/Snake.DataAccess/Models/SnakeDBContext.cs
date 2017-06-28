@@ -13,7 +13,6 @@ namespace Snake.Game.Models
         {
         }
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Scores>(entity =>
