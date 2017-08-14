@@ -105,13 +105,13 @@ namespace Snake.DataAccess.Tests
             //Act
             repository.Delete(userId);
             context.SaveChanges();
-            var users = repository.Get();
-            var user = repository.GetByID(userId);
+
+            var users = context.Users.Count();
+            var user = context.Users.SingleOrDefault(u => u.UserId == userId);
 
             //Assert
             Assert.Null(user);
-            Assert.NotNull(users);
-            Assert.Equal(count, users.Count());
+            Assert.Equal(count, users);
         }
 
         [Fact]
@@ -132,11 +132,12 @@ namespace Snake.DataAccess.Tests
             //Act
             repository.Insert(user);
             context.SaveChanges();
-            var resultUser = repository.GetByID(userId);
+
+            var newUser = context.Users.SingleOrDefault(u => u.UserId == userId);
 
             //Assert
-            Assert.NotNull(resultUser);
-            Assert.Equal(userId, resultUser.UserId);
+            Assert.NotNull(newUser);
+            Assert.Equal(userId, newUser.UserId);
         }
     }
     

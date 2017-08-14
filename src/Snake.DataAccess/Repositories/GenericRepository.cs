@@ -18,10 +18,7 @@ namespace Snake.DataAccess.Repositories
             this.dbSet = context.Set<TEntity>();
         }
 
-        public virtual IEnumerable<TEntity> Get(
-            Expression<Func<TEntity, bool>> filter = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            string includeProperties = "")
+        public virtual IEnumerable<TEntity> Get(Expression<Func<TEntity, bool>> filter = null)
         {
             IQueryable<TEntity> query = dbSet;
 
@@ -30,20 +27,7 @@ namespace Snake.DataAccess.Repositories
                 query = query.Where(filter);
             }
 
-            foreach (var includeProperty in includeProperties.Split
-                (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-            {
-                query = query.Include(includeProperty);
-            }
-
-            if (orderBy != null)
-            {
-                return orderBy(query).ToList();
-            }
-            else
-            {
-                return query.ToList();
-            }
+            return query;
         }
 
         public virtual TEntity GetByID(object id)
@@ -62,7 +46,7 @@ namespace Snake.DataAccess.Repositories
             Delete(entityToDelete);
         }
 
-        public virtual void Delete(TEntity entityToDelete)
+        protected virtual void Delete(TEntity entityToDelete)
         {
             if (context.Entry(entityToDelete).State == EntityState.Detached)
             {

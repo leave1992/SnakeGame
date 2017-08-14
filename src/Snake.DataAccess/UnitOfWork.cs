@@ -1,44 +1,37 @@
 ﻿using Snake.DataAccess.Repositories;
 using Snake.Game.Models;
 using System;
+using System.Collections.Generic;
 
 namespace Snake.DataAccess
 {
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
+        private bool disposed = false;
         private SnakeDBContext _context;
-        private GenericRepository<User> userRepository;
-        private GenericRepository<Scores> scoresRepository;
+        private Dictionary<string, object> repositories;
 
         public UnitOfWork(SnakeDBContext context)
         {
             _context = context;
         }
 
-        public GenericRepository<User> UserRepository
+        public IGenericRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {
-            get
+            if (repositories == null)
             {
-
-                if (this.userRepository == null)
-                {
-                    this.userRepository = new GenericRepository<User>(_context);
-                }
-                return userRepository;
+                repositories = new Dictionary<string, object>();
             }
-        }
 
-        public GenericRepository<Scores> ScoresRepository
-        {
-            get
+            var type = typeof(TEntity).Name;
+
+            if (!repositories.ContainsKey(type))
             {
-
-                if (this.scoresRepository == null)
-                {
-                    this.scoresRepository = new GenericRepository<Scores>(_context);
-                }
-                return scoresRepository;
+                var repositoryInstance = new GenericRepository<TEntity>(_context);
+                repositories.Add(type, repositoryInstance);
             }
+
+            return type as IGenericRepository<TEntity>;
         }
 
         public void Save()
@@ -46,18 +39,16 @@ namespace Snake.DataAccess
             _context.SaveChanges();
         }
 
-        private bool disposed = false;
-
         protected virtual void Dispose(bool disposing)
         {
-            if (!this.disposed)
+            if (!disposed)
             {
                 if (disposing)
                 {
                     _context.Dispose();
                 }
             }
-            this.disposed = true;
+            disposed = true;
         }
 
         public void Dispose()

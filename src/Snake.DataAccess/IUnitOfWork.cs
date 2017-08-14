@@ -5,8 +5,7 @@ namespace Snake.DataAccess
 {
     public interface IUnitOfWork
     {
-        GenericRepository<User> UserRepository { get; }
-        GenericRepository<Scores> ScoresRepository { get; }
+        IGenericRepository<TEntity> GetRepository<TEntity>() where TEntity : class;
         void Save();
     }
 }
