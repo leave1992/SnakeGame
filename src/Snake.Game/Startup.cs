@@ -30,6 +30,8 @@ namespace Snake.Game
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<SnakeDBContext>(options => options.UseSqlServer(connectionString));
             services.AddSingleton<IUnitOfWork, UnitOfWork>();
+
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,9 +44,9 @@ namespace Snake.Game
                 app.UseDeveloperExceptionPage();
             }
 
-            app.Run(async (context) =>
+            app.UseMvc(routes =>
             {
-                await context.Response.WriteAsync("Hello World!");
+                routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

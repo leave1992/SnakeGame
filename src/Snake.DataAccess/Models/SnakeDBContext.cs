@@ -42,7 +42,7 @@ namespace Snake.Game.Models
 
             modelBuilder.Entity<HighScores>(entity =>
             {
-                entity.HasKey(e => e.HighScoreId);
+                entity.HasKey(e => e.ScoreId);
             });
 
             modelBuilder.Entity<HighScores>().ToTable("HighScores");

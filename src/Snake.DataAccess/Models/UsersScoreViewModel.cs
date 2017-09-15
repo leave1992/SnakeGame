@@ -1,16 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text;
 
-namespace Snake.Game.Models
+namespace Snake.DataAccess.Models
 {
-    public partial class Scores
+    public class UsersScoreViewModel
     {
-        public int ScoreId { get; set; }
         public int Score { get; set; }
         [DataType(DataType.Date)]
         public DateTime? Date { get; set; }
         public int? UserId { get; set; }
-
-        public virtual User User { get; set; }
     }
 }

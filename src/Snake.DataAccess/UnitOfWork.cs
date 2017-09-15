@@ -9,7 +9,7 @@ namespace Snake.DataAccess
     {
         private bool disposed = false;
         private SnakeDBContext _context;
-        private Dictionary<string, object> repositories;
+        private Dictionary<string, object> _repositories;
 
         public UnitOfWork(SnakeDBContext context)
         {
@@ -18,20 +18,20 @@ namespace Snake.DataAccess
 
         public IGenericRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {
-            if (repositories == null)
+            if (_repositories == null)
             {
-                repositories = new Dictionary<string, object>();
+                _repositories = new Dictionary<string, object>();
             }
 
             var type = typeof(TEntity).Name;
 
-            if (!repositories.ContainsKey(type))
+            if (!_repositories.ContainsKey(type))
             {
                 var repositoryInstance = new GenericRepository<TEntity>(_context);
-                repositories.Add(type, repositoryInstance);
+                _repositories.Add(type, repositoryInstance);
             }
 
-            return type as IGenericRepository<TEntity>;
+            return _repositories[type] as GenericRepository<TEntity>;
         }
 
         public void Save()
