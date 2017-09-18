@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Snake.DataAccess;
 using Snake.Game.Models;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace Snake.Game
 {
@@ -31,6 +32,11 @@ namespace Snake.Game
             services.AddDbContext<SnakeDBContext>(options => options.UseSqlServer(connectionString));
             services.AddSingleton<IUnitOfWork, UnitOfWork>();
 
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
+            });
+
             services.AddMvc();
         }
 
@@ -47,6 +53,13 @@ namespace Snake.Game
             app.UseMvc(routes =>
             {
                 routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
+            });
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
         }
     }
