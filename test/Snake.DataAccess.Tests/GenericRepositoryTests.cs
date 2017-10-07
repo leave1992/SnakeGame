@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Snake.DataAccess.Repositories;
 using Snake.Game.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -28,7 +29,7 @@ namespace Snake.DataAccess.Tests
                 .BuildServiceProvider();
 
             var builder = new DbContextOptionsBuilder<SnakeDBContext>();
-            builder.UseInMemoryDatabase()
+            builder.UseInMemoryDatabase(Guid.NewGuid().ToString())
                    .UseInternalServiceProvider(serviceProvider);
 
             return builder.Options;

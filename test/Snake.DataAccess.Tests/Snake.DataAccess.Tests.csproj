@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Snake.DataAccess\Snake.DataAccess.csproj" />
+    <ProjectReference Include="..\..\src\Snake.DataAccess\Snake.DataAccess.csproj" />
   </ItemGroup>
 
   <ItemGroup>

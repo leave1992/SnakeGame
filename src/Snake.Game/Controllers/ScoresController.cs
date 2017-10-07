@@ -25,7 +25,7 @@ namespace Snake.Game.Controllers
             return _repository.Get();
         }
 
-        [HttpGet("{id}", Name = "GetScore")]
+        [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
             var score = _repository.GetByID(id);
@@ -53,7 +53,7 @@ namespace Snake.Game.Controllers
 
             _repository.Insert(score);
             _unitOfWork.Save();
-            return CreatedAtRoute("GetScore", new { id = score.ScoreId }, score);
+            return new ObjectResult(score);
 
         }
     }
