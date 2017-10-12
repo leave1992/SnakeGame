@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Snake.DataAccess.IntegrationTests": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "TESTS"
+      }
+    }
+  }
+}
